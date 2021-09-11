@@ -21,6 +21,11 @@ public class GameUiHandler : MonoBehaviour
         SetBestScore();
     }
 
+    public bool GetGameover()
+    {
+        return isGameOver;
+    }
+
     private void SetCurrentUsername()
     {
         if(MainManager.Instance != null)
