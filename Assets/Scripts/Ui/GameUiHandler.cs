@@ -26,7 +26,10 @@ public class GameUiHandler : MonoBehaviour
     void ShowEndGamePanel()
     {
         if (gameManager.GetGameover())
+        {
             endGamePanel.SetActive(true);
+            SetBestScore();
+        }
     }
 
 

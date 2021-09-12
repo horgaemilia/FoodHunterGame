@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     void GameOver()
     {
         isGameOver = true;
+        UpdateBestScore();
     }
 
     public float GetLeftSeconds()
@@ -55,7 +56,21 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isGameOver == false)
+        if (isGameOver == false)
             ComputeLeftSeconds();
+    }
+
+    void UpdateBestScore()
+    {
+        if (MainManager.Instance != null)
+        {
+            MainManager.Instance.LoadStats();
+            string currentUsername = MainManager.Instance.GetUsername();
+            if (points >= MainManager.Instance.GetScore())
+            {
+                MainManager.Instance.UpdateBestScore(currentUsername, points);
+                MainManager.Instance.SaveStats();
+            }
+        }
     }
 }
