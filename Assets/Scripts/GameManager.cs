@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     private bool isGameOver;
     private int points = 0;
-    private int seconds = 10;
+    private int seconds = 60;
     private int leftSeconds = 60;
     private float elapsedSeconds = 0;
     public int GetPoints()
