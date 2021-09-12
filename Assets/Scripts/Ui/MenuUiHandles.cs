@@ -31,6 +31,8 @@ public class MenuUiHandles : MonoBehaviour
 
     public void Quit()
     {
+        if (MainManager.Instance != null)
+            MainManager.Instance.SaveStats();
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
 #else
@@ -45,6 +47,7 @@ public class MenuUiHandles : MonoBehaviour
             username = userameInput.placeholder.GetComponent<Text>().text.ToString();
         if (MainManager.Instance != null)
         {
+            MainManager.Instance.LoadStats();
             MainManager.Instance.SetUsername(username);
             MainManager.Instance.SaveStats();
         }

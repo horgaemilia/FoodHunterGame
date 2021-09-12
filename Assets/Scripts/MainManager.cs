@@ -7,8 +7,8 @@ public class MainManager : MonoBehaviour
 {
     public static MainManager Instance { get; private set; }
     private string username;
-    private string bestUser = "";
-    private int score = 0;
+    private string bestUser ;
+    private int score ;
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,20 +23,20 @@ public class MainManager : MonoBehaviour
 
     public string GetUsername()
     {
-        return username;
+        return Instance.username;
     }
     public string GetBestUsername()
     {
-        return bestUser;
+        return Instance.bestUser;
     }
     public int GetScore()
     {
-        return score;
+        return Instance.score;
     }
     public void UpdateBestScore(string username, int score)
     {
-        this.username = username;
-        this.score = score;
+        Instance.bestUser = username;
+        Instance.score = score;
     }
 
     [System.Serializable]
@@ -49,19 +49,17 @@ public class MainManager : MonoBehaviour
 
     public void SetUsername(string username)
     {
-        this.username = username;
-        if(score == 0)
-        {
-            bestUser = username;
-        }
+        if (Instance.score == 0)
+            Instance.bestUser = username;
+        Instance.username = username;
     }
 
     public void SaveStats()
     {
         SaveData data = new SaveData();
-        data.username = this.username;
-        data.score = this.score;
-        data.bestUser = this.bestUser;
+        data.username = Instance.username;
+        data.score = Instance.score;
+        data.bestUser = Instance.bestUser;
         string path = Application.persistentDataPath + "/savefile.json";
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(path, json);
@@ -74,9 +72,9 @@ public class MainManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
-            data.username = username;
-            data.bestUser = bestUser;
-            data.score = score;
+            data.username = Instance.username;
+            data.bestUser = Instance.bestUser;
+            data.score = Instance.score;
         }
     }
 
