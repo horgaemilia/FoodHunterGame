@@ -20,7 +20,6 @@ public class GameUiHandler : MonoBehaviour
         controlPlayer = GameObject.Find("Player").GetComponent<ControlPlayer>();
         endGamePanel.SetActive(false);
         SetCurrentUsername();
-        SetCurrentScore();
         SetBestScore();
     }
 
@@ -85,6 +84,7 @@ public class GameUiHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetCurrentScore();
         SetAmmnoText();
         UpdateTimer();
         ShowEndGamePanel();
