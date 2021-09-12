@@ -9,12 +9,14 @@ public class EnemyController : MonoBehaviour
     [SerializeField] GameObject smoke;
     protected int points;
     [SerializeField] GameManager gameManager;
+    protected Rigidbody enemyRb;
 
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         controlPlayer = GameObject.Find("Player").GetComponent<ControlPlayer>();
+        enemyRb = gameObject.GetComponent<Rigidbody>();
         SetPoints();
     }
 
@@ -23,11 +25,15 @@ public class EnemyController : MonoBehaviour
         points = 5;
     }
 
-    void MoveLeft()
+    protected void MoveLeft()
     {
         transform.Translate(Vector3.right * movementSpeed * Time.deltaTime);
     }
 
+    protected virtual void Move()
+    {
+        MoveLeft();
+    }
     void DestroyOutOfBounds()
     {
         if (transform.position.x > 30)
@@ -36,7 +42,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(controlPlayer.GetAmmunition() != 0)
+        if(controlPlayer.GetAmmunition() != 0 && gameManager.GetGameover() == false)
         {
             GameObject firework = Instantiate(smoke, transform.position, Quaternion.identity);
             firework.GetComponent<ParticleSystem>().Play();
@@ -45,10 +51,22 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void GameOver()
+    {
+        if (gameManager.GetGameover() == false)
+        {
+            GameObject firework = Instantiate(smoke, transform.position, Quaternion.identity);
+            firework.GetComponent<ParticleSystem>().Play();
+            Destroy(gameObject);
+        }
+    }
+
+
     // Update is called once per frame
     void Update()
     {
-        MoveLeft();
+        Move();
         DestroyOutOfBounds();
+        GameOver();
     }
 }
