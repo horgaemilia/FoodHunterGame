@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class GameUiHandler : MonoBehaviour
 {
     [SerializeField] Text score;
@@ -22,6 +22,12 @@ public class GameUiHandler : MonoBehaviour
         SetCurrentUsername();
         SetCurrentScore();
         SetBestScore();
+    }
+
+    void ShowEndGamePanel()
+    {
+        if (gameManager.GetGameover())
+            endGamePanel.SetActive(true);
     }
 
 
@@ -66,10 +72,21 @@ public class GameUiHandler : MonoBehaviour
         }
     }
 
+    public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     // Update is called once per frame
     void Update()
     {
         SetAmmnoText();
         UpdateTimer();
+        ShowEndGamePanel();
     }
 }
