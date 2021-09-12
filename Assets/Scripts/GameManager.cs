@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
         return points;
     }
 
+    public void AddPoints(int points)
+    {
+        this.points += points;
+    }
+
     IEnumerator Timer()
     {
         yield return new WaitForSeconds(seconds);
