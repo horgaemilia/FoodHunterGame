@@ -8,23 +8,21 @@ public class GameUiHandler : MonoBehaviour
     [SerializeField] Text score;
     [SerializeField] Text bestScoreText;
     [SerializeField] GameObject endGamePanel;
-    private bool isGameOver;
-    private int points = 0;
+    [SerializeField] GameManager gameManager;
+    [SerializeField] ControlPlayer controlPlayer;
+    [SerializeField] Text leftAmmnoText;
     private string username;
     // Start is called before the first frame update
     void Start()
     {
-        isGameOver = true;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        controlPlayer = GameObject.Find("Player").GetComponent<ControlPlayer>();
         endGamePanel.SetActive(false);
         SetCurrentUsername();
         SetCurrentScore();
         SetBestScore();
     }
 
-    public bool GetGameover()
-    {
-        return isGameOver;
-    }
 
     private void SetCurrentUsername()
     {
@@ -37,6 +35,7 @@ public class GameUiHandler : MonoBehaviour
 
     private void SetCurrentScore()
     {
+        int points = gameManager.GetPoints();
         score.text = username + ": " + points;
     }
 
@@ -51,9 +50,18 @@ public class GameUiHandler : MonoBehaviour
         }
     }
 
+    private void SetAmmnoText()
+    {
+        if(controlPlayer != null)
+        {
+            float leftAmmno = controlPlayer.GetAmmunition();
+            leftAmmnoText.text = "Ammunition: " + leftAmmno;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        SetAmmnoText();
     }
 }

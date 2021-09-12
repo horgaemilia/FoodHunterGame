@@ -6,10 +6,17 @@ public class GameManager : MonoBehaviour
 {
     private bool isGameOver;
     private int points = 0;
-
+    private int seconds = 60;
+    private int leftSeconds = 60;
     public int GetPoints()
     {
         return points;
+    }
+
+    IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(seconds);
+        GameOver();
     }
 
     public bool GetGameover()
@@ -20,6 +27,12 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         isGameOver = false;
+        StartCoroutine(Timer());
+    }
+
+    void GameOver()
+    {
+        isGameOver = true;
     }
 
     // Update is called once per frame

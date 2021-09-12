@@ -12,12 +12,19 @@ public class ControlPlayer : MonoBehaviour
     [SerializeField] float rotationSpeed = 6;
     private float[] horizontalLimits = {-4,4};
     private float[] verticalLimits = {-9,10};
-
+    private float ammunition;
+    private float reloadTime = 1.5f;
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         position = transform.position;
+        ammunition = 5;
+    }
+
+    public float GetAmmunition()
+    {
+        return ammunition;
     }
 
 
@@ -31,6 +38,7 @@ public class ControlPlayer : MonoBehaviour
             transform.localPosition = position;
             transform.localRotation = Quaternion.Euler(verticalAngle, horizontalAngle, 0);
             lastLocalRotation = transform.localRotation;
+            HandleLeftClick();
         }
         else
         {
@@ -38,6 +46,24 @@ public class ControlPlayer : MonoBehaviour
             transform.position = position;
         }
     }
+
+    void HandleLeftClick()
+    {
+        if (Input.GetMouseButtonDown(0)) //left click
+        {
+            if (ammunition > 0)
+                ammunition -= 1;
+            if (ammunition == 0)
+                StartCoroutine(Reload());
+        }
+    }
+
+    IEnumerator Reload()
+    {
+        yield return new WaitForSeconds(reloadTime);
+        ammunition = 5;
+    }
+
 
     private void RotateHorizontal()
     {
