@@ -14,10 +14,12 @@ public class ControlPlayer : MonoBehaviour
     private float[] verticalLimits = {-9,10};
     private float ammunition;
     private float reloadTime = 1.5f;
+    [SerializeField] AudioSource sounds;
     // Start is called before the first frame update
     void Start()
     {
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        sounds = GetComponent<AudioSource>();
         position = transform.position;
         ammunition = 5;
     }
@@ -52,7 +54,10 @@ public class ControlPlayer : MonoBehaviour
         if (Input.GetMouseButtonDown(0)) //left click
         {
             if (ammunition > 0)
+            {
                 ammunition -= 1;
+                sounds.Play();
+            }
             if (ammunition == 0)
                 StartCoroutine(Reload());
         }
