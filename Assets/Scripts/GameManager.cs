@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     private int points = 0;
     private int seconds = 60;
     private int leftSeconds = 60;
+    private float elapsedSeconds = 0;
     public int GetPoints()
     {
         return points;
@@ -17,6 +18,12 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         GameOver();
+    }
+
+    private void ComputeLeftSeconds()
+    {
+        elapsedSeconds += Time.deltaTime;
+        leftSeconds = seconds - Mathf.RoundToInt(elapsedSeconds);
     }
 
     public bool GetGameover()
@@ -35,9 +42,14 @@ public class GameManager : MonoBehaviour
         isGameOver = true;
     }
 
+    public float GetLeftSeconds()
+    {
+        return leftSeconds;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        
+        ComputeLeftSeconds();
     }
 }

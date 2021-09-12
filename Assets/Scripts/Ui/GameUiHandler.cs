@@ -12,6 +12,7 @@ public class GameUiHandler : MonoBehaviour
     [SerializeField] ControlPlayer controlPlayer;
     [SerializeField] Text leftAmmnoText;
     private string username;
+    [SerializeField] Text timer;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +32,12 @@ public class GameUiHandler : MonoBehaviour
             MainManager.Instance.LoadStats();
             this.username = MainManager.Instance.GetUsername();
         }
+    }
+
+    private void UpdateTimer()
+    {
+        float leftSeconds = gameManager.GetLeftSeconds();
+        timer.text = "left: " + leftSeconds + "s";
     }
 
     private void SetCurrentScore()
@@ -63,5 +70,6 @@ public class GameUiHandler : MonoBehaviour
     void Update()
     {
         SetAmmnoText();
+        UpdateTimer();
     }
 }
